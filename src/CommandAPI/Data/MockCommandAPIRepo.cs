@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CommandAPI.Data
 {
-    public class MockCommandAPIRepo : ICommandeAPIRepo
+    public class MockCommandAPIRepo : ICommandAPIRepo
     {
         private List<Command> commands = new List<Command>
         {
