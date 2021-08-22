@@ -3,11 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommandAPI.Models;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CommandAPI.Data
 {
     public class MockCommandAPIRepo : ICommandeAPIRepo
     {
+        private List<Command> commands = new List<Command>
+        {
+            new Command
+            {
+                Id = 1,
+                HowTo = "How to generate a migration.",
+                CommandLine = "dotnet ef migrations add <Name of Migration>",
+                Platform = ".NET Core EF",
+            },
+            new Command
+            {
+                Id = 2,
+                HowTo = "Run Migrations",
+                CommandLine = "dotnet ef database update",
+                Platform = ".NET Core EF",
+            },
+            new Command
+            {
+                Id = 3,
+                HowTo = "List active migrations",
+                CommandLine = "dotnet ef migrations list",
+                Platform = ".NET Core EF"
+            },
+            new Command
+            {
+                Id = 3,
+                HowTo = "List Aneudy's age",
+                CommandLine = "Aneudy is 31 years old",
+                Platform = ".NET Core EF"
+            }
+        };
+
         public bool SaveChanges()
         {
             throw new NotImplementedException();
@@ -15,42 +49,20 @@ namespace CommandAPI.Data
 
         public IEnumerable<Command> GetAllCommands()
         {
-            var commands = new List<Command>
-            {
-                new Command
-                {
-                    Id = 0,
-                    HowTo = "How to generate a migration.",
-                    CommandLine = "dotnet ef migrations add <Name of Migration>",
-                    Platform = ".NET Core EF",
-                },
-                new Command
-                {
-                    Id = 1,
-                    HowTo = "Run Migrations",
-                    CommandLine = "dotnet ef database update",
-                    Platform = ".NET Core EF",
-                },
-                new Command
-                {
-                    Id = 2,
-                    HowTo = "List active migrations",
-                    CommandLine = "dotnet ef migrations list",
-                    Platform = ".NET Core EF"
-                }
-            };
             return commands;
         }
 
         public Command GetCommandById(int id)
         {
-            return new Command
+            foreach (var command in commands)
             {
-                Id = 0,
-                HowTo = "How to generate a migration.",
-                CommandLine = "dotnet ef migrations add <Name of Migration>",
-                Platform = ".NET Core EF",
-            };
+                if (command.Id == id)
+                {
+                    return command;
+                }
+            }
+
+            return null;
         }
 
         public void CreateCommand(Command command)
